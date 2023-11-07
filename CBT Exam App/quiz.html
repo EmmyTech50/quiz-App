@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/quiz.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <button class="previous btn btn-primary text-white">Prev</button>
+                <p class="quiz_time">Time</p>
+
+                
+                <button class="btn btn-danger mx-1 text-white submit_question_btn "> Submit Now</button>
+               
+
+            <button class="next btn btn-primary text-white">Next</button>
+          
+        </div>
+    </nav>
+    <div class="container-fluid my-5">
+
+        <div class="question_container">
+
+            <div class="row question_1"></div>
+
+        </div>
+
+        <div class="row footer">
+            
+            <div class="col-md-9 mx-auto question_list"></div>
+
+        </div>
+
+    </div>
+     
+    <script>
+
+        const Questions = [
+            {
+                "question":"When did Nigeria got her independence?",
+                "option":{
+                    "A":"2nd November, 1999",
+                    "B":"1st October, 1930",
+                    "C":"1st October, 1960",
+                    "D":"1st October, 2023",
+                },
+                "answer":"C"
+            },
+
+            {
+                "question":"What is the capital city of Cameroon?",
+                "option":{
+                    "A":"Abijan",
+                    "B":"Abuja",
+                    "C":"Yawanda",
+                    "D":"Dakar",
+                },
+                "answer":"C"
+            },
+
+            {
+                "question":"What is the full meaning of NGO?",
+                "option":{
+                    "A":"Non Generic Organization",
+                    "B":"AOTA",
+                    "C":"Non Governmental Organization",
+                    "D":"NOTA",
+                },
+                "answer":"C"
+            },
+            
+            {
+                "question":"Who is the immediate past president of Nigeria?",
+                "option":{
+                    "A":"Dr Nnamdi Azikiwe",
+                    "B":"Prof. Mahmud Yakubu",
+                    "C":"General Ibrahim Babaginda",
+                    "D":"Mohammedu Buhari",
+                },
+                "answer":"D"
+            },
+
+            {
+                "question":"What is the full meaning of NYSC?",
+                "option":{
+                    "A":"New Youth Society Coorperation",
+                    "B":"National Youth Society Corps",
+                    "C":"National Youth Service Corps",
+                    "D":"Natonal Youth Service Corps",
+                },
+                "answer":"D"
+            },
+        
+            {
+                "question":"Who Authored the book titled THE gods ARE NOT TO BE BLAME?",
+                "option":{
+                    "A":"Chinua Acheba",
+                    "B":"Wole Soyinka",
+                    "C":"Ola Rotimi",
+                    "D":"Chinamanda Adichie",
+                },
+                "answer":"D"
+            },
+            {
+                "question":"How many classes of food are there?",
+                "option":{
+                    "A":"6",
+                    "B":"7",
+                    "C":"8",
+                    "D":"20",
+                },
+                "answer":"D"
+            },
+            {
+                "question":"Who Authored the book titled THE gods ARE NOT TO BE BLAME?",
+                "option":{
+                    "A":"Chinua Acheba",
+                    "B":"Wole Soyinka",
+                    "C":"Ola Rotimi",
+                    "D":"Chinamanda Adichie",
+                },
+                "answer":"D"
+            },
+            {
+                "question":"Who discoverd River Niger?",
+                "option":{
+                    "A":"Chinua Acheba",
+                    "B":"Wole Soyinka",
+                    "C":"Ola Rotimi",
+                    "D":"Chinamanda Adichie",
+                },
+                "answer":"C"
+            },
+            {
+                "question":"Who is the Founder/CEO of Zoetech Global IT and Services?",
+                "option":{
+                    "A":"Dr Emmanuel Onogwu",
+                    "B":"Dr Godwin Onogwu",
+                    "C":"Pro Nnamdi Didigwu",
+                    "D":"Chinamanda Adichie",
+                },
+                "answer":"C"
+            },
+        ];
+
+        let question_list  = document.querySelector(".question_list");
+        // let us build the buttons to list the question numbers
+        let q_list_display = "";     //variable to hold the list of the button
+
+        Questions.forEach( (_,i) =>{
+            q_list_display+= `<button class="btn btn-primary mx-1 text-white q_button" id="q_${i}"> ${ ( i + 1 ) }</button>`;
+        } );
+
+        //display the buttons for each of the question indicating their numbers
+        question_list.innerHTML      = q_list_display;
+
+        // Build a function that will help display one question at a time
+        let previousBtn              = document.querySelector('.previous');
+        let nextBtn                  = document.querySelector('.next');
+        let ques_container           = document.querySelector('.question_container');
+
+        let qBtns = document.querySelectorAll('.q_button');
+
+        let currentIndex             = 0;  //index to hold the current question
+        let TotalScore               = 0;  //total score
+
+        const selectQuestion         = (questions, index ) =>{
+
+            if( index > -1 && index <questions.length ){
+                ques_container.innerHTML = `<div class="row question_${index}">
+                                    
+                                                <div class="col-md-9 mx-auto question">
+                                                    <p class="fs-3">${index + 1} . ${ questions[index].question }</p>
+                                                </div>
+                                    
+                                                <div class="col-md-9 mx-auto options_${index}">
+                                                            
+                                                    <p class"fs-5"> <input type="radio" name="q"  value="A" class="fs-5"/> A. ${ questions[index].option.A } </p>
+                                                    <p class"fs-5"> <input type="radio" name="q"  value="B" class="fs-5"/> B. ${ questions[index].option.B } </p>
+                                                    <p class"fs-5"> <input type="radio" name="q"  value="C" class="fs-5"/> C. ${ questions[index].option.C } </p>
+                                                    <p class"fs-4"> <input type="radio" name="q"  value="D" class="fs-5"/> D. ${ questions[index].option.D } </p>
+                                                                
+                                                </div>
+
+                    
+                    
+                                            </div>`;
+ 
+            }
+            
+            // stating when the submit btn should show
+            if(index == questions.length - 1){
+                document.querySelector('.submit_question_btn').classList.remove('hide');
+            }else{
+                document.querySelector('.submit_question_btn').classList.add('hide');
+            }
+
+            //control the previous button // disable or enable previous
+            if( index == 0){
+                previousBtn.setAttribute('disabled', 'disabled');
+
+            } else{
+                previousBtn.removeAttribute('disabled');
+            }
+
+            //disable or enable the next btn
+            if(index == questions.length-1){
+                nextBtn.setAttribute('disabled', 'disabled');   
+            }else{
+                nextBtn.removeAttribute('disabled'); 
+            }
+
+            //locate the current btn and highlight it
+            
+
+            
+            qBtns.forEach( (item) => {
+                if(item.id.split('_')[1] == index ){
+                    item.classList.replace('btn-primary', 'btn-success');
+                    //item.classlist add btn-primary success
+                }else{
+                    item.classList.replace('btn-success', 'btn-primary');
+                }
+            });
+
+             //call the answer question of the function
+             answerQuestion(index);
+             console.log(TotalScore);
+            
+        }
+
+
+        // functions to select the next and previous btn
+        nextBtn.onclick     = function(){
+            currentIndex++; // increment the currentindex by 1
+            // then select a question
+            selectQuestion(Questions, currentIndex );
+ 
+        }
+
+        previousBtn.onclick = function(){
+            currentIndex--; // decrement the currentindex by 1
+            // then select a question
+            selectQuestion(Questions, currentIndex ); 
+           
+        }
+
+        //go to a given question
+        qBtns.forEach((item) =>{
+            // attach a click event on each of the button
+            item.addEventListener('click', function(evt) {
+                let question_index = parseInt(item.id.split('_')[1]); // get the index of the question from the button
+                currentIndex       = question_index;       // set the currentIndex to the question_index
+                selectQuestion(Questions, currentIndex );  // call the select question function
+
+            }); 
+        })
+
+        selectQuestion(Questions, currentIndex );
+
+        function answerQuestion(index){
+            let options = document.getElementsByName('q');
+            //check when option is selected for each question
+            options.forEach((option) =>{
+                option.addEventListener('click', function(e){
+                    let userAnswer = option.value;
+                    if(userAnswer == Questions[index].answer){
+                        TotalScore+=10;
+                        // another way of saying TotalScore+=10;
+                        // TotalScore = TotalScore + 10;
+
+                    };
+                });
+                
+            });
+        }
+
+        // console.log(TotalScore);
+        
+        // scheduling the time for the quiz 
+
+        let quizTimeSet = 30 * 60 * 1000; // 30 minutes set for the quiz in milliseconds i.e the computer understand time in milliseconds
+        
+        let quizTime = new Date().getTime() + quizTimeSet; //updating the set time(30mins) with the current time in milliseconds 
+        
+
+        //set-time interval 
+        let timeInterval      = setInterval(function(){
+            //the current
+            let currentTime   = new Date().getTime();
+            console.log(timeInterval);
+
+            let timeRemaining = quizTime - currentTime;
+
+            if(timeRemaining <= 0){
+                document.querySelector('.quiz_time').innerHTML = 'Time Up!!';
+                clearInterval(timeInterval);
+
+            }else{
+                let hours   = Math.floor(timeRemaining / (1000 * 60 * 60));
+                let minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+                document.querySelector('.quiz_time').innerHTML = `Time Duration:${minutes}m ${seconds}s`;
+
+            }
+
+        });
+        
+        
+        //submit questions and answer
+        let subBtn         = document.querySelector('.submit_question_btn');
+        subBtn.onclick     = function(event){
+            //redirect the user to the score page
+            location.href  = 'score.html';
+            sessionStorage.setItem('score', TotalScore);
+        }
+
+
+        //using the storage API to store the score
+        //two ways of that is 
+        //sessionStorage: this store temporary on the RAM 
+        //localStorage: this store permanently on the ROM
+
+        sessionStorage.setItem('score', TotalScore);
+        
+
+        let inputs   = document.getElementsByTagName('input'); //this is an example of HTML Collection list
+        let classBtn = document.querySelector('.submit_question_btn').classList; // this is example of a DOM token list
+
+        console.log(inputs);
+        console.log(classBtn );
+
+        //DOM means Document Object Module
+
+
+        
+        
+
+       
+        
+         
+
+        
+
+    </script>
+</body>
+</html>

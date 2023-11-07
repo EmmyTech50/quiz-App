@@ -1,0 +1,29 @@
+body{
+    max-height: 100vh;
+    background-color: aqua;
+
+}
+
+.question{
+    flex-direction: column;
+    text-justify: auto;
+}
+
+.options >p{
+    background-color: #fff;
+    padding: 10px;
+
+
+}
+
+.hide{
+    display: none;
+}
+
+.footer{
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    background-color: #fff;
+    padding: 10px;
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Score</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body{
+            height: 100vh;
+            background-color: blue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .score_box{
+            width: 500px;
+            height: 400px;
+            border: 1px solid blue;
+            border-radius: 5px;
+            background-color: aqua;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="score_box">
+        <p class="name">Onogwu Emmanuel</p>
+        <h3>EXAM SCORE</h3>
+        <h1>100</h1>
+    </div>
+
+    <script>
+        let scoreDis = document.querySelector('.score_box h1');
+        let totalScore = sessionStorage.getItem('score');
+        // check if the totalScore is not empty
+        if(totalScore){
+            scoreDis.innerHTML = totalScore
+        }
+    </script>
+</body>
+</html>
